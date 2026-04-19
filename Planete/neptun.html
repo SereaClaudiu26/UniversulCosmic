@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ro" prefix="og: https://ogp.me/ns#">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Neptun - Gigantul Albastru</title>
+    <link rel="icon" href="../imagini/Neptune.png">
+    <meta name="description" content="Descoperă Neptun,a opta planeta  de la Soare, cunoscută ca Gigantul albastru.">
+    <meta property="og:title" content="Saturn - Cronos">
+    <meta property="og:description" content="Descoperă Neptun,a opta planeta  de la Soare, cunoscută ca Gigantul albastru.">
+    <meta property="og:image" content="https://mars.nasa.gov/system/news_items/main_images/9337_PIA25681-FigureA-web.jpg">
+    <meta property="og:url" content="https://mars.nasa.gov/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content=" neptun- Gigantul albastru">
+    <meta name="twitter:description" content="Descoperă Neptun,a opta planeta  de la Soare, cunoscută ca Gigantul albastru.">
+    <meta name="twitter:image" content="https://mars.nasa.gov/system/news_items/main_images/9337_PIA25681-FigureA-web.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #000428, #004e92); /* Gradient albastru */
+    color: #333333;
+    line-height: 1.8;
+}
+
+
+        header, nav, section, footer {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+
+        header {
+            background: url('https://wallpapercat.com/w/full/a/3/7/28959-3840x2160-desktop-4k-neptune-wallpaper.jpg') no-repeat center center;
+            background-size: cover;
+            color: #ffffff;
+            text-align: center;
+            padding: 150px 20px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1rem;
+            margin: 0 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: #f39c12;
+        }
+
+
+        section {
+        padding: 40px 20px;
+        margin: 20px auto;
+        max-width: 1200px;
+        background-color: rgba(255, 255, 255, 0.8); /* Alb cu transparență 80% */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #333333;}
+
+
+
+
+       
+        section h2 {
+            font-size: 2rem;
+            color: #d35400;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #f39c12;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+
+<style>
+    .map-container {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+        cursor: grab;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+        background: url('https://images7.alphacoders.com/134/1345682.png') no-repeat center center;
+        background-size: contain;
+        transform-origin: center center;
+        transition: transform 0.5s ease;
+    }
+
+    .marker {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background: linear-gradient(135deg, rgba(204, 194, 140, 0.9), rgba(200, 200, 255, 0.8));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: black;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+    }
+
+    .marker:hover {
+        transform: scale(1.5);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(150, 150, 255, 0.9));
+    }
+
+    .info-panel {
+        position: fixed;
+        top: -100%;
+        right: 20px;
+        width: 400px;
+        height: auto;
+        max-height: 70%;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        z-index: 200;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transform: translateY(0);
+        transition: top 0.5s ease, opacity 0.5s ease;
+        opacity: 0;
+    }
+
+    .info-panel.active {
+        top: 20px;
+        opacity: 1;
+    }
+
+    .zoom-buttons {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 100;
+    }
+
+    .zoom-buttons button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .zoom-buttons button:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    
+
+    .text-image-container {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px; /* Spațiu între text și imagine */
+        margin-bottom: 20px; /* Spațiu între secțiuni */
+    }
+
+    .text-content {
+        flex: 1; /* Textul ocupă spațiul rămas */
+    }
+
+    .image-content img {
+        max-width: 300px; /* Dimensiunea maximă a imaginii */
+        height: auto; /* Păstrează proporțiile imaginii */
+        border-radius: 10px; /* Colțuri rotunjite (opțional) */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Umbra imaginii (opțional) */
+    }
+
+
+<style>
+    /* Stiluri existente */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #000428, #004e92); /* Gradient albastru */
+        color: #333333;
+        line-height: 1.8;
+    }
+
+    .text-image-container {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px; /* Spațiu între text și imagine */
+        margin-bottom: 20px; /* Spațiu între secțiuni */
+    }
+
+    .text-content {
+        flex: 1; /* Textul ocupă spațiul rămas */
+    }
+
+    .image-content img {
+        max-width: 300px; /* Dimensiunea maximă a imaginii */
+        height: auto; /* Păstrează proporțiile imaginii */
+        border-radius: 10px; /* Colțuri rotunjite (opțional) */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Umbra imaginii (opțional) */
+    }
+</style>
+
+<style>
+    /* Stiluri existente */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #000428, #004e92); /* Gradient albastru */
+        color: #333333;
+        line-height: 1.8;
+    }
+
+    .background-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .star {
+        position: absolute;
+        background-color: white;
+        border-radius: 50%;
+        animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .planet {
+        position: absolute;
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        opacity: 0.8;
+        z-index: 1;
+        animation: float 8s infinite ease-in-out;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+    }
+</style>
+</head>
+<body>
+
+<!-- Butonul cu animații integrate -->
+<button 
+  id="scrollToTopBtn" 
+  title="Derulează în sus" 
+  style="
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    background: #007bff; 
+    color: white; 
+    border: none; 
+    font-size: 20px; 
+    cursor: pointer; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    opacity: 0; 
+    transition: opacity 0.3s, transform 0.4s;
+    z-index: 99;
+"
+>↑</button>
+
+<script>
+// Afișează butonul cu fade-in la derulare
+window.onscroll = function() {
+  var btn = document.getElementById("scrollToTopBtn");
+  if (window.pageYOffset > 200) {
+    btn.style.display = "block";
+    setTimeout(() => { btn.style.opacity = "1"; }, 10); // Delay pentru animație
+  } else {
+    btn.style.opacity = "0";
+    setTimeout(() => { btn.style.display = "none"; }, 300); // Așteaptă fade-out
+  }
+};
+
+// Animatie "bounce" când ajunge sus
+document.getElementById("scrollToTopBtn").onclick = function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  this.style.transform = "translateY(-10px)";
+  setTimeout(() => { this.style.transform = "translateY(0)"; }, 200);
+};
+</script>
+
+    <!-- Butoane și sidebar -->
+<button id="menuButton" class="menu-button">&#9776;</button>
+<div id="sidebar" class="sidebar">
+    <button id="closeButton" class="close-button">&times;</button>
+    
+    <!-- Header sidebar cu buton home -->
+    <div class="sidebar-header">
+        <a href="../concurs.html" id="homeButton" class="home-button">🏠</a>
+        <h3>Navigație Cosmică</h3>
+    </div>
+    
+    <!-- Planete -->
+<div class="menu-item has-submenu">
+    <a href="#">Planete <span class="arrow">▼</span></a>
+    <div class="submenu-right hidden">
+        <a href="../Planete/mercur.html">Mercur</a>
+        <a href="../Planete/venus.html">Venus</a>
+        <a href="../Planete/pamant.html">Pământ</a>
+        <a href="../Planete/marte.html">Marte</a>
+        <a href="../Planete/jupiter.html">Jupiter</a>
+        <a href="../Planete/saturn.html">Saturn</a>
+        <a href="../Planete/uranus.html">Uranus</a>
+        <a href="../Planete/neptun.html">Neptun</a>
+    </div>
+</div>
+    
+    <!-- Galaxii -->
+    <div class="menu-item">
+        <a href="../Galaxii/andromeda.html">Galaxii</a>
+    </div>
+    
+    <!-- Constelații -->
+    <div class="menu-item">
+        <a href="../Constelatii.3/constelatii.3.html">Constelații</a>
+    </div>
+
+    <!-- Fenomene cosmice -->
+ <div class="menu-item has-submenu">
+    <a href="#">Misiuni Interactive<span class="arrow">▼</span></a>
+    <div class="submenu-right hidden">
+        <a href="../Misiuni Interactive/calcularemasa.html">Calcul masa</a>
+              <a href="../Misiuni Interactive/aventura spatiala.html">Aventura spatiala</a>
+
+        <a href="../Misiuni Interactive/testul1.html">1. Test interactiv</a>
+         <a href="../Misiuni Interactive/testul2.html">2. Test interactiv</a>
+         <a href="../Misiuni Interactive/testul3.html">3. Test interactiv</a>
+</div></div>
+
+ <div class="menu-item">
+        <a href="../Credite/credite.html">Credite</a>
+    </div></div>
+
+    <style>
+      /* Structura de bază */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -390px; /* Ascuns în mod implicit */
+    width: 320px;
+    height: 100vh;
+     isolation: auto;
+    background: linear-gradient(135deg, rgba(15, 12, 41, 0.98) 0%, rgba(26, 26, 46, 0.98) 100%);
+    backdrop-filter: blur(12px);
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 20px;
+    overflow-y: auto;
+    border-left: 1px solid rgba(106, 17, 203, 0.3);
+}
+
+.sidebar.open {
+    right: 0;
+    box-shadow: -15px 0 50px rgba(0, 0, 0, 0.7);
+}
+
+/* Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-out;
+    backdrop-filter: blur(3px);
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Butoane de control */
+.menu-button {
+    position: fixed;
+    top: 25px;
+    right: 15px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5);
+    transition: all 0.3s ease;
+}
+
+.menu-button:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 25px rgba(106, 17, 203, 0.8);
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(180deg);
+}
+
+/* Header sidebar */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    color: #00f2fe;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+.home-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(106, 17, 203, 0.3);
+    color: white;
+    border: none;
+    font-size: 20px;
+    margin-right: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.home-button:hover {
+    background: rgba(106, 17, 203, 0.7);
+    transform: rotate(360deg);
+}
+
+/* Elemente meniu */
+.menu-item {
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item a {
+    color: #e6e6e6;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 12px 15px;
+    border-radius: 6px;
+    display: block;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.menu-item a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(106, 17, 203, 0.3), transparent);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.menu-item a:hover {
+    color: white;
+    padding-left: 20px;
+}
+
+.menu-item a:hover::before {
+    left: 100%;
+}
+
+/* Submenuri */
+.toggle-submenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-submenu::after {
+    content: '▼';
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.toggle-submenu.active::after {
+    content: '▲';
+    transform: rotate(180deg);
+}
+
+.submenu-right {
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 2px solid #2575fc;
+    margin-left: 10px;
+}
+
+.submenu-right.open {
+    max-height: 500px;
+}
+
+.submenu-right a {
+    font-size: 0.95rem;
+    padding: 10px 15px;
+    color: #b8b8b8;
+    position: relative;
+}
+
+.submenu-right a::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #00f2fe;
+}
+
+.submenu-right a:hover {
+    color: white;
+    padding-left: 20px;
+}
+
+/* Scrollbar personalizat */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(#6a11cb, #2575fc);
+    border-radius: 3px;
+}
+</style>
+
+
+      <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('.menu-button');
+    const sidebar = document.querySelector('.sidebar');
+    const closeButton = document.querySelector('.close-button');
+    const homeButton = document.querySelector('.home-button');
+    
+    // Crearea overlay-ului dinamic (dacă nu există deja în HTML)
+    let overlay = document.querySelector('.sidebar-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'sidebar-overlay';
+        document.body.appendChild(overlay);
+    }
+    
+    // Funcția principală de toggle sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+        
+        // Blocăm scroll-ul când sidebar-ul este deschis
+        document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : 'auto';
+        
+        // Animație buton meniu (transformă în X)
+        if (sidebar.classList.contains('open')) {
+            menuButton.innerHTML = '&times;';
+            menuButton.style.fontSize = '28px';
+            menuButton.setAttribute('aria-expanded', 'true');
+        } else {
+            menuButton.innerHTML = '&#9776;';
+            menuButton.style.fontSize = '24px';
+            menuButton.setAttribute('aria-expanded', 'false');
+        }
+    }
+    
+    // Evenimente pentru deschidere/închidere
+    menuButton.addEventListener('click', toggleSidebar);
+    closeButton.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+    
+    // Funcționalitate submenuri
+    document.querySelectorAll('.menu-item.has-submenu > a').forEach(item => {
+        // Adăugăm săgeată dinamic dacă nu există
+        if (!item.querySelector('.arrow')) {
+            const arrow = document.createElement('span');
+            arrow.className = 'arrow';
+            arrow.innerHTML = '▼';
+            arrow.style.marginLeft = 'auto';
+            arrow.style.transition = 'transform 0.3s ease';
+            item.appendChild(arrow);
+        }
+        
+        item.addEventListener('click', function(e) {
+            // Verificăm dacă facem click pe săgeată sau pe link
+            const isArrowClick = e.target.classList.contains('arrow');
+            const isSubmenuToggle = this.parentElement.classList.contains('has-submenu');
+            
+            if (isSubmenuToggle && !isArrowClick && e.target === this) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+                const arrow = this.querySelector('.arrow');
+                
+                // Toggle vizibilitate submeniu
+                submenu.classList.toggle('open');
+                submenu.style.maxHeight = submenu.classList.contains('open') ? submenu.scrollHeight + 'px' : '0';
+                submenu.setAttribute('aria-hidden', !submenu.classList.contains('open'));
+                
+                // Rotire săgeată
+                if (submenu.classList.contains('open')) {
+                    arrow.style.transform = 'rotate(180deg)';
+                    this.setAttribute('aria-expanded', 'true');
+                } else {
+                    arrow.style.transform = 'rotate(0deg)';
+                    this.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+    });
+    
+    // Închidere sidebar la click pe link-uri (exceptând elementele cu submeniu)
+    document.querySelectorAll('.sidebar .menu-item:not(.has-submenu) > a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 1024) {
+                toggleSidebar();
+            }
+        });
+    });
+    
+    // Închidere sidebar la resize dacă ecranul devine mare
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024 && sidebar.classList.contains('open')) {
+            toggleSidebar();
+        }
+        
+        // Actualizăm înălțimea submeniurilor deschise
+        document.querySelectorAll('.submenu-right.open').forEach(submenu => {
+            submenu.style.maxHeight = submenu.scrollHeight + 'px';
+        });
+    });
+    
+    // Funcționalitate specială buton home
+    homeButton.addEventListener('click', function(e) {
+        if (window.innerWidth < 768) {
+            toggleSidebar();
+        }
+    });
+    
+    // Îmbunătățire accesibilitate
+    document.addEventListener('keydown', function(e) {
+        // Închidere cu ESC
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            toggleSidebar();
+            menuButton.focus();
+        }
+    });
+    
+    // Inițializare stări ARIA și submeniuri
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-label', 'Toggle menu');
+    closeButton.setAttribute('aria-label', 'Close menu');
+    
+    document.querySelectorAll('.submenu-right').forEach(submenu => {
+        submenu.setAttribute('aria-hidden', 'true');
+        submenu.style.maxHeight = '0';
+    });
+    
+    // Animație de intrare mai fluidă
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                if (sidebar.classList.contains('open')) {
+                    document.querySelectorAll('.menu-item').forEach((item, index) => {
+                        item.style.animation = `fadeInRight 0.5s ease ${index * 0.1}s forwards`;
+                    });
+                } else {
+                    document.querySelectorAll('.menu-item').forEach(item => {
+                        item.style.animation = '';
+                    });
+                }
+            }
+        });
+    });
+    
+    observer.observe(sidebar, {
+        attributes: true
+    });
+});
+
+
+      </script>
+   
+
+
+
+    <div class="background-layer"></div>
+    <header>
+        <h1>Neptun- "Gigantul Albastru"</h1>
+        <p>Descoperă misterele și frumusețea planetei Neptun</p>
+    </header>
+
+    <nav>
+        <a href="#caracteristici">Caracteristici</a>
+        <a href="#curiozitati">Curiozități</a>
+        <a href="#harta-interactiva">harta interactiva</a>
+        <a href="#explorare">Explorare</a>
+        
+    </nav>
+
+    <section id="caracteristici">
+        <h2>🌕 Caracteristici Generale ale Planetei Neptun</h2>
+        
+        <h3>🔭 Poziție în Sistemul Solar</h3>
+        <div class="text-image-container">
+            <div class="text-content">
+                <p>Neptun este a opta planetă de la Soare și a patra ca mărime din sistemul solar.</p>
+                <p>Neptun este cunoscut drept „Gigantul Albastru” datorită atmosferei sale compuse în principal din hidrogen, heliu și metan, iar culoarea sa albastră provine de la metanul din atmosferă. Deși este o planetă gazoasă, Neptun are un nucleu solid și o mare parte din masă este reprezentată de apă și alte substanțe înghețate. Este una dintre cele mai vântoase planete din sistemul solar, cu vânturi ce pot atinge viteze de până la 2.100 km/h. Neptun este, de asemenea, cunoscut pentru furtunile sale intense și pentru un sistem de inele slab, dar totodată fascinant.</p>
+                             
+ </div>
+            <div class="image-content">
+                <img src="https://solarstory.net/img/articles/big/position-of-neptune.jpg" alt="">
+            </div>
+        </div>
+        
+        <h3>📏 Dimensiuni și Structură</h3>
+        <div class="text-image-container">
+            <div class="text-content">
+                <ul>
+                    <li><strong>Diametru:</strong> ~49.244 km (aproximativ 3,9 ori mai mare decât al Pământului).</li>
+                    <li><strong>Masa:</strong> ~17,1 ori mai mare decât masa Pământului.</li>
+                    <li><strong>Gravitație:</strong> 1,14 G (adică o persoană de 70 kg ar cântări ~79,8 kg pe Neptun).</li>
+                    <li><strong>Zi neptuniană:</strong> aproximativ 16 ore și 6 minute.</li>
+                    <li><strong>An neptunian:</strong> 165 ani pământeni.</li>
+                </ul>
+                
+                
+                
+                
+            </div>
+            <div class="image-content">
+                <img src="https://scx2.b-cdn.net/gfx/news/2016/1-whatisthesur.jpg" alt="">
+            </div>
+        </div>
+    </section>
+
+    <section id="curiozitati">
+        <h2>Curiozități despre Neptun</h2>
+        <div class="text-image-container">
+            <div class="text-content">
+                <ul>
+                    <li>Neptun are o atmosferă compusă în principal din hidrogen, heliu și metan, care îi conferă culoarea sa albastră intensă. Vânturile pe Neptun sunt extrem de puternice, atingând viteze de până la 2.100 km/h, fiind cele mai rapide din sistemul solar.</li>
+                    <li>Temperaturile pe Neptun sunt extrem de scăzute, cu o medie de aproximativ -218°C. Deși este foarte departe de Soare, Neptun emite mai multă căldură decât primește, sugerând un mecanism intern de încălzire.</li>
+                    <li>Neptun are 14 sateliți confirmați și un sistem de inele subțiri și întunecate, care sunt mult mai greu de observat decât cele ale lui Saturn, dar care oferă informații importante despre evoluția și formarea planetelor.</li>
+                </ul>
+                
+                
+                
+            </div>
+            <div class="image-content">
+                <img src="https://listverse.com/wp-content/uploads/2013/05/winds-pepper.jpg" alt="">
+            </div>
+        </div>
+    </section>
+   
+    
+
+
+   
+   
+   
+   
+    <section id="harta-interactiva">
+        <h2>Harta Interactivă a Planetei Neptun</h2>
+        <div class="map-container" id="mapContainer">
+            <div id="map">
+                <!-- Markere -->
+                
+                <div class="marker" style="top: 30%; left: 40%;" data-info="<h3>Furtuni pe Neptun</h3>
+                    <p>Neptun este faimos pentru furtunile sale extreme și vânturile puternice care ating viteze de până la 2.100 km/h. Aceste furtuni sunt mult mai vizibile decât ale altor planete, datorită culorii albastre intense și a dinamicii atmosferice complexe.</p>
+                    <p>Cercetătorii cred că vânturile și furtunile de pe Neptun ar putea fi cauzate de un mecanism de încălzire internă, care emite mai multă energie decât primește din Soare.</p>
+                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBQfAk9jWBPbJeizs9jDXHeD5VCptLx_oKJA&s' alt='Neptune Storms' style='width:100%; margin-top:10px; border-radius:10px;'>">+</div>
+                
+                <div class="marker" style="top: 40%; left: 60%;" data-info="<h3>Temperaturile pe Neptun</h3>
+                    <p>Neptun este a doua planetă ca temperatură scăzută, cu o medie de aproximativ -218°C. Distanța sa mare față de Soare face ca temperaturile să fie extrem de scăzute, iar atmosfera este dominată de vânturi și nori de metan.</p>
+                    <p>La fel ca Uranus, Neptun emite mai multă căldură decât primește de la Soare, un fenomen care continuă să fie o enigmă pentru oamenii de știință.</p>
+                    <img src='https://cdn.mos.cms.futurecdn.net/BggtZZ9n7TufZsnE5ECkVK-1200-80.jpg' alt='Neptune Temperature' style='width:100%; margin-top:10px; border-radius:10px;'>">+</div>
+                
+                <div class="marker" style="top: 60%; left: 45%;" data-info="<h3>Atmosfera lui Neptun</h3>
+                    <p>Atmosfera lui Neptun este compusă în principal din hidrogen, heliu și metan, iar prezența metanului îi conferă nuanțele sale albastre distinctive. Este o atmosferă turbulentă, cu vânturi foarte puternice și nori de cristal de metan.</p>
+                    <p>Studiile atmosferice ale planetei sunt dificile datorită condițiilor extreme, dar cercetările recente au oferit mai multe informații despre dinamica sa atmosferică.</p>
+                    <img src='https://www.indy100.com/media-library/what-if-you-fell-into-neptune.jpg?id=29717791&width=980' alt='Neptune Atmosphere' style='width:100%; margin-top:10px; border-radius:10px;'>">+</div>
+                
+                <div class="marker" style="top: 38%; left: 78%;" data-info="<h3>Sistemul de inele</h3>
+                    <p>Sistemul de inele al lui Neptun este mult mai subtil decât cel al altor planete, fiind format din cinci inele subțiri, compuse din praf și particule de gheață. Deși inelele nu sunt atât de vizibile ca cele ale lui Saturn, ele sunt totuși o trăsătură distinctivă a planetei.</p>
+                    <p>Aceste inele sunt destul de dense în anumite regiuni și sunt studiate pentru a înțelege mai bine cum se formează inelele planetare.</p>
+                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk5NXG8ZLHC2WGoBeNJOBzgAgoxfOlhNzxFw&s' alt='Neptune Rings' style='width:100%; margin-top:10px; border-radius:10px;'>">+</div>
+                            </div>
+        <div id="infoPanel" class="info-panel"></div>
+    </section>
+   
+   
+   
+    <script>
+        const map = document.getElementById('map');
+        const container = document.getElementById('mapContainer');
+        const zoomInButton = document.getElementById('zoomIn');
+        const zoomOutButton = document.getElementById('zoomOut');
+        const infoPanel = document.getElementById('infoPanel');
+    
+        let scale = 1;
+        let isZoomed = false;
+    
+        // Eveniment pentru fiecare marker
+        const markers = document.querySelectorAll('.marker');
+        markers.forEach(marker => {
+            marker.addEventListener('click', (e) => {
+                e.stopPropagation();
+    
+                if (isZoomed) {
+                    map.style.transformOrigin = 'center center';
+                    map.style.transform = 'scale(1)';
+                    scale = 1;
+                    isZoomed = false;
+                    infoPanel.classList.remove('active');
+                } else {
+                    const info = marker.getAttribute('data-info');
+                    infoPanel.innerHTML = info;
+                    infoPanel.classList.add('active');
+    
+                    const markerRect = marker.getBoundingClientRect();
+const containerRect = container.getBoundingClientRect();
+
+// Calculează coordonatele relative ale marker-ului în container
+const x = markerRect.left + markerRect.width / 2 - containerRect.left;
+const y = markerRect.top + markerRect.height / 2 - containerRect.top;
+
+// Setează punctul de origine pentru zoom
+map.style.transformOrigin = `${x}px ${y}px`;
+map.style.transform = 'scale(2)';
+scale = 2;
+isZoomed = true;
+                }
+            });
+        });
+    
+        // Zoom oriunde pe hartă
+        container.addEventListener('click', (e) => {
+            if (!isZoomed) {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+    
+                map.style.transformOrigin = `${x}px ${y}px`;
+                map.style.transform = 'scale(2)';
+                scale = 2;
+                isZoomed = true;
+            } else {
+                map.style.transformOrigin = 'center center';
+                map.style.transform = 'scale(1)';
+                scale = 1;
+                isZoomed = false;
+            }
+        });
+    
+        // Resetare zoom la dublu click pe hartă
+        container.addEventListener('dblclick', () => {
+            map.style.transformOrigin = 'center center';
+            map.style.transform = 'scale(1)';
+            scale = 1;
+            isZoomed = false;
+            infoPanel.classList.remove('active');
+        });
+    </script>
+    
+    
+    
+    
+    <section id="explorare">
+        <h2>Explorarea planetei Neptun</h2>
+        
+        <div class="text-image-container">
+            <div class="text-content">
+                <p><strong>🪐 De ce este Neptun atât de important?</strong></p>
+<p>Neptun joacă un rol esențial în înțelegerea gigantelor gazoase și a proceselor care se desfășoară în regiunile exterioare ale Sistemului Solar. Cu vânturi extrem de puternice și o atmosferă alcătuită în principal din hidrogen, heliu și metan, această planetă ne oferă informații valoroase despre formarea și dinamica planetelor aflate la mari distanțe de Soare.</p>
+<p>Un alt aspect fascinant al lui Neptun este faptul că emite mai multă căldură decât primește de la Soare, un fenomen misterios ce continuă să fie studiat de cercetători. Atmosfera sa turbulențioasă și ciclurile climatice unice îl transformă într-un subiect deosebit de interes pentru cercetările atmosferice.</p>
+
+  </div>
+            <div class="image-content">
+                <img src="https://www.thoughtco.com/thmb/5uxoR8MjW9YvgxlKlYATpnd8-h4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/voyager2-neptune-5a89d9f104d1cf00367f9b27.jpg" alt="">
+            </div>
+        </div>
+        
+        <div class="text-image-container">
+            <div class="text-content">
+                <p><strong>🚀 Etapele explorării</strong></p>
+                <ul>
+                    <li><strong>1989:</strong> Voyager 2 a fost prima și singura sondă spațială care a vizitat Neptun, trecând la doar 4.800 km deasupra norilor planetei. A descoperit Marele Punct Întunecat, vânturi extreme și mai mulți sateliți necunoscuți anterior, inclusiv Proteus.</li>
+                    <li><strong>După 1989:</strong> Observațiile de la distanță, realizate de telescoape de pe Pământ și de Telescopul Spațial Hubble, au continuat să monitorizeze schimbările atmosferice de pe Neptun și mișcarea norilor gigantici.</li>
+                    <li><strong>Viitor:</strong> Sunt propuse misiuni viitoare, cum ar fi orbiterul „Neptune Odyssey” al NASA, care ar putea studia Neptun, sistemul său de inele și satelitul Triton în detaliu.</li>
+                </ul>
+                
+                
+                
+                  
+                
+            </div>
+            <div class="image-content">
+                <img src="https://images.fineartamerica.com/images-medium-large-5/voyager-ii-probe-passes-neptune-mark-garlickscience-photo-library.jpg" alt="">
+            </div>
+        </div>
+        
+        <div class="text-image-container">
+            <div class="text-content">
+                <p><strong>🔬 Descoperiri importante</strong></p>
+                <ul>
+                    <li>Observarea și cartografierea sistemului de inele al lui Neptun, inclusiv identificarea unor arcuri de inel instabile și structuri neregulate.</li>
+                    <li>Descoperirea vânturilor cele mai rapide din Sistemul Solar, care pot atinge viteze de peste 2.000 km/h în atmosfera lui Neptun.</li>
+                    <li>Studierea satelitului Triton, care are o orbită retrogradă și caracteristici geologice interesante, inclusiv gheizere active de azot înghețat.</li>
+                </ul>
+                
+                
+                
+            </div>
+            <div class="image-content">
+                <img src="https://bigthink.com/wp-content/uploads/2021/09/https___specials-images.forbesimg.com_dam_imageserve_50581210_960x0.jpg" alt="">
+            </div>
+        </div>
+        
+        <div class="text-image-container">
+            <div class="text-content">
+                <p><strong>👨‍🚀 Viitorul explorării</strong></p>
+                <ul>
+                    <li><strong>Misiuni planificate:</strong> Deși nu există misiuni confirmate către Neptun în viitorul apropiat, NASA a propus concepte precum orbiterul „Neptune Odyssey”, care ar studia planeta, inelele sale și satelitul Triton în detaliu.</li>
+                    <li><strong>Misiuni cu echipaj uman:</strong> Din cauza distanței extreme față de Pământ, a temperaturilor foarte scăzute și a lipsei unei suprafețe solide, Neptun nu este o destinație fezabilă pentru misiuni cu echipaj uman în viitorul previzibil.</li>
+                </ul>
+                
+                
+                
+            </div>
+            <div class="image-content">
+                <img src="https://images.saymedia-content.com/.image/t_share/MjAyOTE2NTExODUyMDEyNjEy/the-drama-of-neptunes-discovery.jpg" alt="">
+            </div>
+        </div>
+    </section>
+ 
+ 
+
+    <script>
+        // Creează stele
+        function createStars() {
+            const background = document.querySelector('.background-layer');
+            const count = 150;
+    
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+    
+                star.style.position = 'absolute';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                const size = `${Math.random() * 2 + 1}px`;
+                star.style.width = size;
+                star.style.height = size;
+                star.style.backgroundColor = 'white';
+                star.style.borderRadius = '50%';
+                star.style.opacity = '0.8';
+    
+                background.appendChild(star);
+            }
+        }
+    
+        // Creează planete
+        function createPlanets() {
+            const background = document.querySelector('.background-layer');
+            const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#A78BFA'];
+    
+            for (let i = 0; i < 5; i++) {
+                const planet = document.createElement('div');
+                planet.className = 'planet';
+    
+                const size = Math.random() * 60 + 40;
+                planet.style.position = 'absolute';
+                planet.style.left = `${Math.random() * 90}%`;
+                planet.style.top = `${Math.random() * 90}%`;
+                planet.style.width = `${size}px`;
+                planet.style.height = `${size}px`;
+                planet.style.borderRadius = '50%';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                planet.style.background = `radial-gradient(circle at 30% 30%, white, ${color})`;
+                planet.style.opacity = '0.6';
+    
+                background.appendChild(planet);
+            }
+        }
+       
+        // Inițializare
+        window.onload = () => {
+            createStars();
+            createPlanets();
+        };
+    </script>
+
+
+</body>
+</html>

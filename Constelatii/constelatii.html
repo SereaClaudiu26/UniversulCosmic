@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constelații</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Canvas pentru constelații -->
+    <canvas id="starCanvas"></canvas>
+
+    <!-- Panou pentru afișarea informațiilor -->
+    <div id="infoPanel" class="info-panel">
+        <div class="info-header">
+            <h3 id="infoTitle">Informații despre constelație</h3>
+            <button class="close-btn" onclick="closeInfoPanel()">×</button>
+        </div>
+        <img id="infoImage" src="" alt="Imagine constelație" class="info-image">
+        <p id="infoText">Aici vor apărea detalii despre constelația selectată.</p>
+    </div>
+
+    <!-- Datele despre constelații -->
+    <div id="constellationData" style="display: none;">
+        <div id="ursaMajorData" data-name="Carul Mare" data-info="Carul Mare (cunoscut și sub denumirea de Ursa Major sau Ursa Mare) este una dintre cele mai cunoscute constelații de pe cerul emisferei nordice. Este format din șapte stele strălucitoare care, împreună, creează forma unui car sau a unei lopeți. Patru dintre stele formează „carul” propriu-zis (un pătrat), iar celelalte trei formează „oisașele” (coada carului). Este flosit frecvent pentru orientare, deoarece două dintre stelele care formează marginea „cupeii” (Dubhe și Merak) indică direcția spre Steaua Polară (Polaris), care se află în constelația Ursa Mică. Astfel, Carul Mare este un ghid ceresc de nădejde pentru găsirea nordului.">
+            <img src="carul.mare.jpg" alt="Carul Mare">
+        </div>
+        <div id="cassiopeiaData" data-name="Cassiopeia" data-info="Cassiopeia este o constelație ușor de recunoscut datorită formei sale caracteristice de „W” sau „M”, în funcție de poziția pe cer. Reprezintă regina mitologică Cassiopeia din legendele grecești, cunoscută pentru frumusețea și vanitatea sa. Este vizibilă pe tot parcursul anului în emisfera nordică și, ca și Carul Mare, poate fi folosită pentru orientare, deoarece se află în apropierea Stelei Polare.">
+            <img src="cassiopeia.jpg" alt="Cassiopeia">
+        </div>
+        <div id="orionData" data-name="Orion" data-info="Orion, cunoscut ca Vânătorul, este una dintre cele mai strălucitoare și spectaculoase constelații de pe cerul iernii. Se remarcă prin cele trei stele aliniate din mijloc, care formează „Centura lui Orion”. Sub ele se află „sabia”, în care se găsește nebuloasa Orion o regiune activă de formare a stelelor. Constelația are două stele foarte luminoase: Betelgeuse (roșiatică) și Rigel (alb-albăstruie).”">
+            <img src="orion-flashcard.jpg" alt="Orion">
+        </div>
+        <div id="cygnusData" data-name="Cygnus" data-info="Cygnus, sau Lebăda, este o constelație de vară, aflată pe Calea Lactee. Forma sa amintește de o cruce și este adesea numită și Crucea Nordului. Reprezintă o lebădă zburând pe cer, cu steaua Deneb în vârf – una dintre cele mai strălucitoare stele ale cerului nocturn. Cygnus este bogată în obiecte astronomice, fiind situată într-o regiune densă a galaxiei noastre">
+            <img src="cygnus-cons-m.jpg" alt="Cygnus">
+        </div>
+    </div>
+
+
+
+      <!-- Butoane și sidebar -->
+<button id="menuButton" class="menu-button">&#9776;</button>
+<div id="sidebar" class="sidebar">
+    <button id="closeButton" class="close-button">&times;</button>
+    
+    <!-- Header sidebar cu buton home -->
+    <div class="sidebar-header">
+        <a href="../concurs.html" id="homeButton" class="home-button">🏠</a>
+        <h3>Navigație Cosmică</h3>
+    </div>
+    
+    <!-- Planete -->
+<div class="menu-item has-submenu">
+    <a href="#">Planete <span class="arrow">▼</span></a>
+    <div class="submenu-right hidden">
+        <a href="../Planete/mercur.html">Mercur</a>
+        <a href="../Planete/venus.html">Venus</a>
+        <a href="../Planete/pamant.html">Pământ</a>
+        <a href="../Planete/marte.html">Marte</a>
+        <a href="../Planete/jupiter.html">Jupiter</a>
+        <a href="../Planete/saturn.html">Saturn</a>
+        <a href="../Planete/uranus.html">Uranus</a>
+        <a href="../Planete/neptun.html">Neptun</a>
+    </div>
+</div>
+    
+    <!-- Galaxii -->
+    <div class="menu-item">
+        <a href="../Galaxii/andromeda.html">Galaxii</a>
+    </div>
+    
+    <!-- Constelații -->
+    <div class="menu-item">
+        <a href="Constelatii/constelatii.html">Constelații</a>
+    </div>
+
+    <!-- Fenomene cosmice -->
+ <!-- Fenomene cosmice -->
+ <div class="menu-item has-submenu">
+    <a href="#">Misiuni Interactive<span class="arrow">▼</span></a>
+    <div class="submenu-right hidden">
+        <a href="../Misiuni Interactive/calcularemasa.html">Calcul masa</a>
+             <a href="../Misiuni Interactive/aventura spatiala.html">Aventura spatiala</a>
+
+        <a href="../Misiuni Interactive/testul1.html">1. Test interactiv</a>
+         <a href="../Misiuni Interactive/testul2.html">2. Test interactiv</a>
+         <a href="../Misiuni Interactive/testul3.html">3. Test interactiv</a>
+</div></div><div class="menu-item">
+        <a href="../Credite/credite.html">Credite</a>
+    </div></div>
+
+    <!-- Legătura către fișierul JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

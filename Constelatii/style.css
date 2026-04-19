@@ -1,0 +1,412 @@
+/* Stil pentru corpul paginii */
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #000; /* Fundal negru pentru cerul nopții */
+    color: white;
+}
+
+/* Canvas pentru constelații */
+#starCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #001d3d, #000000); /* Gradient pentru cer */
+}
+
+/* Stil pentru caseta de informații */
+#infoPanel {
+    position: fixed;
+    top: -100%; /* Ascuns în afara ecranului */
+    right: 20px;
+    width: 400px; /* Lățime ajustată */
+    height: auto;
+    max-height: 70%; /* Înălțime maximă */
+    background: rgba(0, 0, 0, 0.9); /* Fundal semi-transparent */
+    color: white;
+    padding: 20px; /* Spațiu interior */
+    box-sizing: border-box;
+    overflow-y: auto; /* Scroll pentru conținut */
+    z-index: 200; /* Nivel de afișare */
+    border-radius: 10px; /* Colțuri rotunjite */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Umbra modernă */
+    transform: translateY(0); /* Poziționare inițială */
+    transition: top 0.5s ease, opacity 0.5s ease; /* Tranziție lină */
+    opacity: 0; /* Invizibil inițial */
+}
+
+/* Stil pentru caseta vizibilă */
+#infoPanel.active {
+    top: 20px; /* Poziția vizibilă */
+    opacity: 1; /* Devine vizibil */
+}
+
+/* Stil pentru antetul casetei */
+.info-header {
+    display: flex;
+    justify-content: space-between; /* Titlul în stânga, butonul "X" în dreapta */
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Stil pentru titlul constelației */
+.info-header h3 {
+    margin: 0;
+    font-size: 1.9em; /* Titlu mai mare */
+    font-weight: bold;
+    color: #ffcc00; /* Culoare aurie pentru titlu */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Efect de umbră */
+    font-family: 'Poppins', Arial, sans-serif; /* Font modern */
+}
+
+/* Stil pentru butonul "X" */
+.close-btn {
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ff4d4d;
+   
+}
+
+/* Stil pentru imaginea constelației */
+.info-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px; /* Colțuri mai rotunjite */
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); /* Umbra mai pronunțată */
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Bordură subtilă */
+}
+
+/* Stil pentru textul descriptiv */
+#infoText {
+    font-size: 1.2em; /* Dimensiune mai mare */
+    line-height: 1.8; /* Spațiere între linii */
+    color: rgba(255, 255, 255, 0.9); /* Text alb cu transparență */
+    font-family: 'Segoe UI Black', Arial, sans-serif; /* Font modern */
+    margin-top: 10px;
+    text-align: justify; /* Text justificat pentru un aspect profesional */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Efect subtil de umbră */
+}
+
+/* Efect de glow pentru stele */
+.star {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+/* Animație pentru stele */
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Stil pentru un mesaj de eroare (dacă este necesar) */
+#errorMessage {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 69, 58, 0.9);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+
+
+
+
+/* Structura de bază */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -390px; /* Ascuns în mod implicit */
+    width: 320px;
+    height: 150vh;
+     isolation: auto;
+    background: linear-gradient(135deg, rgba(15, 12, 41, 0.98) 0%, rgba(26, 26, 46, 0.98) 100%);
+    backdrop-filter: blur(12px);
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 30px;
+    overflow-y: auto;
+    border-left: 1px solid rgba(106, 17, 203, 0.3);
+}
+
+.sidebar.open {
+    right: 0;
+    box-shadow: -15px 0 50px rgba(0, 0, 0, 0.7);
+}
+
+/* Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-out;
+    backdrop-filter: blur(3px);
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Butoane de control */
+.menu-button {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5);
+    transition: all 0.3s ease;
+}
+
+.menu-button:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 25px rgba(106, 17, 203, 0.8);
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(180deg);
+}
+
+/* Header sidebar */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.9rem;
+    color: #00f2fe;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+.home-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(106, 17, 203, 0.3);
+    color: white;
+    border: none;
+    font-size: 25px;
+    margin-right: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.home-button:hover {
+    background: rgba(106, 17, 203, 0.7);
+    transform: rotate(360deg);
+}
+
+/* Elemente meniu */
+.menu-item {
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item a {
+    color: #e6e6e6;
+    text-decoration: none;
+    font-size: 1.4rem;
+    padding: 12px 15px;
+    border-radius: 6px;
+    display: block;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.menu-item a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(106, 17, 203, 0.3), transparent);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.menu-item a:hover {
+    color: white;
+    padding-left: 20px;
+}
+
+.menu-item a:hover::before {
+    left: 100%;
+}
+
+/* Submenuri */
+.toggle-submenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-submenu::after {
+    content: '▼';
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.toggle-submenu.active::after {
+    content: '▲';
+    transform: rotate(180deg);
+}
+
+.submenu-right {
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 2px solid #2575fc;
+    margin-left: 10px;
+}
+
+.submenu-right.open {
+    max-height: 500px;
+}
+
+.submenu-right a {
+    font-size: 1.3rem;
+    padding: 10px 15px;
+    color: #b8b8b8;
+    position: relative;
+}
+
+.submenu-right a::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #00f2fe;
+}
+
+.submenu-right a:hover {
+    color: white;
+    padding-left: 20px;
+}
+
+/* Scrollbar personalizat */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(#6a11cb, #2575fc);
+    border-radius: 3px;
+}
+
+/* Adaptare pentru mobil */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 280px;
+    }
+    
+    .menu-button {
+        top: 15px;
+        left: 15px;
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+    }
+    
+    .sidebar-header h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Efect special activare */
+@keyframes sidebarEntry {
+    0% {
+        transform: translateX(100%) skewX(-10deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) skewX(0);
+        opacity: 1;
+    }
+}
+
+.sidebar.open {
+    animation: sidebarEntry 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+

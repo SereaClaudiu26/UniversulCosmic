@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constelații | Atlas Cosmic Interactiv</title>
+    <link rel="icon" href="imagini/space.jpg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Butoane și sidebar - PĂSTRAT IDENTIC -->
+<button id="menuButton" class="menu-button">&#9776;</button>
+<div id="sidebar" class="sidebar">
+    <button id="closeButton" class="close-button">&times;</button>
+    
+    <!-- Header sidebar cu buton home -->
+    <div class="sidebar-header">
+        <a href="../concurs.html" id="homeButton" class="home-button">🏠</a>
+        <h3>Navigație Cosmică</h3>
+    </div>
+    
+    <!-- Planete -->
+    <div class="menu-item has-submenu">
+        <a href="#">Planete <span class="arrow">▼</span></a>
+        <div class="submenu-right hidden">
+            <a href="../Planete/mercur.html">Mercur</a>
+            <a href="../Planete/venus.html">Venus</a>
+            <a href="../Planete/pamant.html">Pământ</a>
+            <a href="../Planete/marte.html">Marte</a>
+            <a href="../Planete/jupiter.html">Jupiter</a>
+            <a href="../Planete/saturn.html">Saturn</a>
+            <a href="../Planete/uranus.html">Uranus</a>
+            <a href="../Planete/neptun.html">Neptun</a>
+        </div>
+    </div>
+    
+    <!-- Galaxii -->
+    <div class="menu-item">
+        <a href="../Galaxii/andromeda.html">Galaxii</a>
+    </div>
+    
+    <!-- Constelații -->
+    <div class="menu-item">
+        <a href="../Constelatii/constelatii.html">Constelații</a>
+    </div>
+
+    <!-- Fenomene cosmice -->
+    <div class="menu-item has-submenu">
+        <a href="#">Misiuni Interactive<span class="arrow">▼</span></a>
+        <div class="submenu-right hidden">
+            <a href="../Misiuni Interactive/calcularemasa.html">Calcul masa</a>
+            <a href="../Misiuni Interactive/aventura spatiala.html">Aventura spatiala</a>
+            <a href="../Misiuni Interactive/testul1.html">1. Test interactiv</a>
+            <a href="../Misiuni Interactive/testul2.html">2. Test interactiv</a>
+            <a href="../Misiuni Interactive/testul3.html">3. Test interactiv</a>
+        </div>
+    </div>
+    
+    <!-- Credite -->
+    <div class="menu-item">
+        <a href="../Credite/credite.html">Credite</a>
+    </div>
+</div>
+
+<div class="stars-background"></div>
+<header class="cosmic-header">
+    <div class="logo">
+        <h1>Constelații</h1>
+        <p>Hărți cerești și mitologie stelară</p>
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#home">Acasă</a></li>
+            <li><a href="#constelatii">Constelații</a></li>
+            <li><a href="#mituri">Mituri</a></li>
+            <li><a href="#ghid">Ghid observare</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+</header>
+
+<main>
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h2>Descoperă Constelațiile</h2>
+            <p>Călătorește prin miturile străvechi și hărțile cerești ale celor mai fascinante constelații vizibile pe cerul nopții.</p>
+            <button id="exploreBtn" class="cosmic-button">Explorează acum</button>
+        </div>
+        <div class="particles" id="particles-js"></div>
+    </section>
+
+    <section id="constelatii" class="info-section">
+        <div class="section-title">
+            <h2>⭐ Constelații Celebre</h2>
+            <div class="title-decoration"></div>
+        </div>
+        <div class="cards-container" id="constellationsContainer"></div>
+    </section>
+
+    <section id="mituri" class="info-section">
+        <div class="section-title">
+            <h2>🏛️ Mituri și Legende</h2>
+            <div class="title-decoration"></div>
+        </div>
+        <div class="cards-container" id="mythologyContainer"></div>
+    </section>
+
+    <section id="ghid" class="info-section">
+        <div class="section-title">
+            <h2>🔭 Ghid de Observare</h2>
+            <div class="title-decoration"></div>
+        </div>
+        <div class="cards-container" id="guideContainer"></div>
+    </section>
+</main>
+
+<footer id="contact" class="cosmic-footer">
+    <div class="footer-content">
+        <p>&copy; <span id="currentYear"></span> Atlas Cosmic al Constelațiilor.</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/share/16ZbypEeSC/?mibextid=wwXIfr"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/m1rcea_l/"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="infoModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3 id="modalTitle"></h3>
+        <img id="modalImage" src="" alt="">
+        <p id="modalDescription"></p>
+        <div class="modal-additional-info" id="modalAdditionalInfo"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
