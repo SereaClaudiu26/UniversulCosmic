@@ -405,11 +405,10 @@ body {
         margin-left: 10px;
     }
 
-    /* Buton sidebar poziționat pentru mobil */
-    .menu-button {
+   .menu-button {
         position: fixed;
-        top: 67.5px !important;
-        right: 7.5px !important;
+        top: 15px;
+        right: 15px;
         width: 42px;
         height: 42px;
         font-size: 20px;
@@ -574,8 +573,8 @@ body {
 
 /* Butoane de control */
 .menu-button {
-    position: fixed;
-    top: 20px;
+   position: fixed;
+   top: 20px;
     right: 15px;
     width: 42px;
     height: 42px;
@@ -585,10 +584,12 @@ body {
     border: none;
     font-size: 24px;
     cursor: pointer;
+    z-index: 1001;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5);
+    transition: all 0.3s ease;
 }
 
 
