@@ -384,9 +384,7 @@ body {
     top: 0;
     left: 0;
     z-index: 0;
-}
-
-/* Responsive Design */
+} 
 @media (max-width: 768px) {
     /* Header mai compact */
     .cosmic-header {
@@ -405,43 +403,25 @@ body {
         margin-left: 10px;
     }
 
-   .menu-button {
-        position: fixed;
-        top: 15px;
-        right: 15px;
-        width: 42px;
-        height: 42px;
-        font-size: 20px;
-        z-index: 9999;
-    }
+    .menu-button {
+        position: fixed !important;
+        top: auto !important;
+        top: 10px !important;
+        right: 15px !important;
+        left: auto !important;
+        width: 42px !important;
+        height: 42px !important;
+        background: linear-gradient(45deg, #6a11cb, #2575fc) !important;
+        z-index: 9999 !important;}
 
-    /* Navbar mobil */
+    /* Ascunde navbar-ul normal pe mobil */
     .navbar {
-        position: fixed;
-        top: 90px;
-        right: -100%;
-        width: 100%;
-        background: rgba(10, 10, 26, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 1rem;
-        transition: all 0.3s ease;
+        display: none;
     }
-
-    .navbar.active {
-        left: 0;
-    }
-
-    .navbar ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .navbar ul li {
-        margin: 0.5rem 0;
-    }
-
+    
+    /* Ascunde meniul toggle */
     .menu-toggle {
-        display: block;
+        display: none;
     }
 
     /* Conținut hero mai mic */
@@ -573,8 +553,8 @@ body {
 
 /* Butoane de control */
 .menu-button {
-   position: fixed;
-   top: 20px;
+    position: fixed;
+    top: 20px;
     right: 15px;
     width: 42px;
     height: 42px;
@@ -591,6 +571,7 @@ body {
     box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5);
     transition: all 0.3s ease;
 }
+
 
 
 .close-button {
