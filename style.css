@@ -741,3 +741,8 @@ body {
     background: linear-gradient(#6a11cb, #2575fc);
     border-radius: 3px;
 }
+@media (max-width: 768px) {
+    body:has(.sidebar.open) .menu-button {
+        display: none !important;
+    }
+}
